@@ -1,5 +1,10 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import {
+  initializeAuth,
+  browserSessionPersistence,
+  browserPopupRedirectResolver,
+  GoogleAuthProvider,
+} from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
 
 // The Firebase web config comes from the API (GET /api/meta/client-config),
@@ -26,7 +31,14 @@ export async function initFirebase() {
   if (clientConfig.firebase) {
     const app = initializeApp(clientConfig.firebase);
     firebaseEnabled = true;
-    auth = getAuth(app);
+    // Initialise sign-in with per-tab storage from the start (sessionStorage), so each
+    // browser tab keeps its own Google account: two tabs can be signed in as two
+    // different users, and signing out in one tab does not affect the other.
+    // (Closing a tab signs that tab out.)
+    auth = initializeAuth(app, {
+      persistence: browserSessionPersistence,
+      popupRedirectResolver: browserPopupRedirectResolver,
+    });
     realtimeDb = clientConfig.firebase.databaseURL ? getDatabase(app) : null;
   }
 }

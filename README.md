@@ -6,7 +6,8 @@ Booking more units than are left returns **409 Not enough units left**, and ever
 
 ### 🌐 Live: <https://labmid-awt.onrender.com>
 
-Sign in with Google. (Free hosting sleeps after 15 minutes without visitors, so the first visit can take
+Sign in with Google. Your admin Gmail is **admin**; any other Google account starts as a **student**;
+the admin makes someone **staff** in *Users & Roles*. Each browser tab keeps its own sign-in. (Free hosting sleeps after 15 minutes without visitors, so the first visit can take
 about a minute to wake up.)
 
 Stack (as in my infra diagram): **React → Nginx → Google Auth 2.0 (Firebase Auth) → Node/Express API → PostgreSQL + Firebase**.
@@ -122,7 +123,8 @@ Reset the sample data any time with `npm run db:reset` (then restart the app).
 
 ## Demo script (for the viva)
 
-Use two browser windows (one normal, one incognito) with two accounts.
+Open the site in **two tabs** and sign in with a different Google account in each. Every tab keeps its
+own sign-in (closing a tab signs that tab out), so one tab can be staff/admin and the other a student.
 
 1. **Student** opens *Lab Equipment*, books all 5 *Soldering Station* units → green **Acceptance**.
 2. In the **staff/admin** window the card changes to **0 / 5 left** instantly, and a toast says *New loan request* (Rule 7).

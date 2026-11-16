@@ -6,21 +6,21 @@ const DEV_KEY = 'labLoans.devEmail';
 export const devSession = {
   get() {
     try {
-      return localStorage.getItem(DEV_KEY);
+      return sessionStorage.getItem(DEV_KEY);
     } catch {
       return null;
     }
   },
   set(email) {
     try {
-      localStorage.setItem(DEV_KEY, email);
+      sessionStorage.setItem(DEV_KEY, email);
     } catch {
       /* ignore */
     }
   },
   clear() {
     try {
-      localStorage.removeItem(DEV_KEY);
+      sessionStorage.removeItem(DEV_KEY);
     } catch {
       /* ignore */
     }
