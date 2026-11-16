@@ -4,6 +4,11 @@ Students browse **lab equipment** and book **loans**; staff manage equipment and
 Booking more units than are left returns **409 Not enough units left**, and every change appears live
 (`availability:changed`) without refreshing.
 
+### 🌐 Live: <https://labmid-awt.onrender.com>
+
+Sign in with Google. (Free hosting sleeps after 15 minutes without visitors, so the first visit can take
+about a minute to wake up.)
+
 Stack (as in my infra diagram): **React → Nginx → Google Auth 2.0 (Firebase Auth) → Node/Express API → PostgreSQL + Firebase**.
 
 See **[DESIGN.md](DESIGN.md)** for the full design: application diagram, infra, ERD, API contract,
@@ -57,6 +62,22 @@ Sign in with the Gmail you gave the wizard — you are admin. Any other Google a
 promote a staff account in **Users & Roles**.
 
 All settings live in **one file: `server/.env`** (template: `server/.env.example`).
+
+## How the public site is hosted
+
+| Part | Service |
+|---|---|
+| React app + Node API (one web service, built from `render.yaml`) | Render (free, Singapore) |
+| PostgreSQL | Neon (free, Singapore) — tables are created on first start |
+| Google sign-in + live events | Firebase (Auth + Realtime Database) |
+
+Every `git push` to `main` redeploys automatically. Secrets (database URL, Firebase key) live only in
+Render's environment settings, never in the repo. If the site ever gets a new domain, allow it for
+Google sign-in with:
+
+```bash
+npm run firebase:sync -- --domain=new-domain.onrender.com
+```
 
 ## Run the full infra with Docker (Nginx + API + PostgreSQL)
 
