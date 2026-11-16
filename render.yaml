@@ -5,6 +5,7 @@ services:
     name: labmid-awt
     runtime: node
     plan: free
+    region: singapore
     buildCommand: npm run build
     startCommand: npm run start:prod
     healthCheckPath: /api/health
