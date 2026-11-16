@@ -72,7 +72,8 @@ All settings live in **one file: `server/.env`** (template: `server/.env.example
 | PostgreSQL | Neon (free, Singapore) — tables are created on first start |
 | Google sign-in + live events | Firebase (Auth + Realtime Database) |
 
-Every `git push` to `main` redeploys automatically. Secrets (database URL, Firebase key) live only in
+To publish changes: `git push`, then in Render open the **labmid-awt** service →
+**Manual Deploy → Deploy latest commit** (about 1–2 minutes). Secrets (database URL, Firebase key) live only in
 Render's environment settings, never in the repo. If the site ever gets a new domain, allow it for
 Google sign-in with:
 
