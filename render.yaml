@@ -1,0 +1,34 @@
+# Render Blueprint: one web service runs the API and serves the built React app.
+# Database: Neon PostgreSQL (DATABASE_URL). Tables are created on first start.
+services:
+  - type: web
+    name: labmid-awt
+    runtime: node
+    plan: free
+    buildCommand: npm run build
+    startCommand: npm run start:prod
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "22"
+      - key: CACHE_TTL_SECONDS
+        value: "60"
+      # Secrets / per-project values: Render asks for these when you create the Blueprint
+      - key: DATABASE_URL
+        sync: false
+      - key: ADMIN_EMAILS
+        sync: false
+      - key: FIREBASE_API_KEY
+        sync: false
+      - key: FIREBASE_AUTH_DOMAIN
+        sync: false
+      - key: FIREBASE_PROJECT_ID
+        sync: false
+      - key: FIREBASE_APP_ID
+        sync: false
+      - key: FIREBASE_DATABASE_URL
+        sync: false
+      - key: FIREBASE_SERVICE_ACCOUNT_JSON
+        sync: false

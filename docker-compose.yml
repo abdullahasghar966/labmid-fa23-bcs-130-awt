@@ -1,0 +1,45 @@
+# Whole infra diagram in one command:  docker compose up --build
+#   web (Nginx + React)  ->  api (Node/Express)  ->  db (PostgreSQL)
+#                                                ->  Firebase (cloud: Auth + Realtime DB)
+# Open http://localhost:8080
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: lab_loans
+    volumes:
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./database/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d lab_loans"]
+      interval: 3s
+      retries: 20
+
+  api:
+    build: ./server
+    env_file: ./server/.env
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/lab_loans
+      FIREBASE_SERVICE_ACCOUNT_PATH: /secrets/service-account.json
+      CORS_ORIGIN: http://localhost:8080
+    volumes:
+      - ./server/service-account.json:/secrets/service-account.json:ro
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+
+volumes:
+  pgdata:

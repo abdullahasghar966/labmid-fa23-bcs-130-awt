@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+.env.local
+service-account.json
+.pgdata/
+DEPLOY-SECRETS.txt
+.claude/
+client/dist/

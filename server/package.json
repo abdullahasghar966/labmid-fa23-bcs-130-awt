@@ -1,0 +1,26 @@
+{
+  "name": "lab-loans-api",
+  "version": "1.0.0",
+  "description": "Lab Equipment Loans API (Variant 0) - Node/Express + PostgreSQL + Firebase",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "db:local": "node scripts/local-db.js",
+    "db:reset": "node scripts/db-reset.js",
+    "test": "node --test --test-concurrency=1 test/api.test.js",
+    "firebase:sync": "node scripts/firebase-sync.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "firebase-admin": "^14.5.1",
+    "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "embedded-postgres": "^17.11.0-beta.19"
+  }
+}

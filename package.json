@@ -1,0 +1,20 @@
+{
+  "name": "labmid-fa23-bcs-130-awt",
+  "version": "1.0.0",
+  "description": "Lab-Mid (Advanced Web Technologies) - Variant 0: Lab Equipment Loans",
+  "private": true,
+  "scripts": {
+    "setup": "npm install --prefix server && npm install --prefix client && node server/scripts/setup.js",
+    "configure": "node server/scripts/setup.js",
+    "start": "node server/scripts/start.js",
+    "serve": "node server/scripts/start.js --no-open",
+    "test": "npm test --prefix server",
+    "db:reset": "npm run db:reset --prefix server",
+    "build": "npm install --prefix server --omit=dev && npm install --prefix client --include=dev && npm run build --prefix client",
+    "start:prod": "node server/src/index.js",
+    "firebase:sync": "npm run firebase:sync --prefix server --"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

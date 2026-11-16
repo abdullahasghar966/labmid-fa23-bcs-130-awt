@@ -1,0 +1,5 @@
+**/node_modules
+server/.pgdata
+client/dist
+**/.env
+server/service-account.json

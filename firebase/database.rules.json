@@ -1,0 +1,29 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "roles": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid"
+      }
+    },
+
+    "live": {
+      "public": {
+        ".read": "auth != null",
+        ".indexOn": ["at"]
+      },
+      "staff": {
+        ".read": "auth != null && (root.child('roles').child(auth.uid).val() === 'staff' || root.child('roles').child(auth.uid).val() === 'admin')",
+        ".indexOn": ["at"]
+      },
+      "users": {
+        "$uid": {
+          ".read": "auth != null && auth.uid === $uid",
+          ".indexOn": ["at"]
+        }
+      }
+    }
+  }
+}
